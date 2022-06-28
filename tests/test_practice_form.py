@@ -1,8 +1,5 @@
-
-import pytest
-
 from selene.support.shared import browser
-from selene import be, have
+from selene import have
 from selene.support.shared.jquery_style import s, ss
 
 
@@ -17,8 +14,8 @@ def test_name(browser_config):
     phonenumber = '1111111111'
     month = 'April'
     year = '2000'
-    # переменная day всегда обозначается двумя знаками: 01, 02, 15, 31
-    # day = '06'
+    # переменная day всегда должно быть обозначено двумя знаками: 01, 02, 15, 31
+    day = '20'
     subject = 'English'
     hobby = 'Sports'
     # изображение для переменной upload всегда должно быть названо одним знаком, например: 1, F, 4
@@ -30,12 +27,12 @@ def test_name(browser_config):
     s('#firstName').type(firstname)
     s('#lastName').type(lastname)
     s('#userEmail').type(email)
-    s('[for="gender-radio-3"]').should(have.text(gender)).click()
+    s('[for="gender-radio-3"]').click()
     s('#userNumber').type(phonenumber)
     s('#dateOfBirthInput').click()
     s('.react-datepicker__month-select').type(month)
     s('.react-datepicker__year-select').type(year)
-    s(f'.react-datepicker__day--006').click()
+    s(f'.react-datepicker__day--0{day}').click()
     s('#subjectsInput').type(subject).press_enter()
     s('[for="hobbies-checkbox-1"]').click()
     s('#uploadPicture').type(upload)
@@ -50,10 +47,9 @@ def test_name(browser_config):
         f'{email}',
         f'{gender}',
         f'{phonenumber}',
-        f'06 {month},{year}',
+        f'{day} {month},{year}',
         f'Subjects {subject}',
         f'Hobbies {hobby}',
         f'Picture {upload[-5:]}',
         f'Address {address}',
         f'State and City {state} {city}'))
-
